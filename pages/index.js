@@ -25,8 +25,9 @@ export default function Home(props) {
                 Try Examples
               </MenuButton>
               <MenuList>
-                <MenuItem><NextLink href="/?url=https%3A%2F%2Fcatalog-five.vercel.app%2Ftest.csv&country=AU&currency=AUD" passHref><a>Localized catalog (USD to AUD)</a></NextLink></MenuItem>
-                <MenuItem><NextLink href="/?url=https%3A%2F%2Fcatalog-five.vercel.app%2Ftest.csv&inventory=999&category=Electronics" passHref><a>Checkout-available catalog (override inventory and category)</a></NextLink></MenuItem>
+                <MenuItem><NextLink href="/?url=https%3A%2F%2Fcatalog-five.vercel.app%2Ftest_aud.csv&currency=AUD" passHref><a>Simple currency conversion (e.g. AUD to USD)</a></NextLink></MenuItem>
+                <MenuItem><NextLink href="/?url=https%3A%2F%2Fcatalog-five.vercel.app%2Ftest.csv&country=AU&currency=AUD" passHref><a>Localized catalog with country override (US to AU)</a></NextLink></MenuItem>
+                <MenuItem><NextLink href="/?url=https%3A%2F%2Fcatalog-five.vercel.app%2Ftest.csv&inventory=999&category=Electronics" passHref><a>Make checkout-available catalog with static inventory and category override)</a></NextLink></MenuItem>
               </MenuList>
             </>
           )}
@@ -68,6 +69,16 @@ export default function Home(props) {
                   </FormControl>
                 )}
               </Field>
+
+              <Field name="currency">
+                {({ field, form }) => (
+                  <FormControl id="form_currency">
+                    <FormLabel>Currency Conversion</FormLabel>
+                    <Input {...field} id="currency" placeholder="e.g. USD" size="md" value={values.currency} />
+                    <FormHelperText><Link href="https://www.currency-iso.org/en/home/tables.html">Use ISO Code.</Link> <Link href="https://exchangeratesapi.io/">Exchange rates</Link> is updated daily.</FormHelperText>
+                  </FormControl>
+                )}
+              </Field>
               
               <Field name="country">
                 {({ field, form }) => (
@@ -78,17 +89,7 @@ export default function Home(props) {
                   </FormControl>
                 )}
               </Field>
-              
-              <Field name="currency">
-                {({ field, form }) => (
-                  <FormControl id="form_currency">
-                    <FormLabel>Currency Override</FormLabel>
-                    <Input {...field} id="currency" placeholder="e.g. USD" size="md" value={values.currency} />
-                    <FormHelperText><Link href="https://www.currency-iso.org/en/home/tables.html">Use ISO Code</Link></FormHelperText>
-                  </FormControl>
-                )}
-              </Field>
-                
+
               <Field name="inventory">
                 {({ field, form }) => (
                   <FormControl id="form_inventory">
