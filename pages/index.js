@@ -25,7 +25,7 @@ export default function Home(props) {
                 Try Examples
               </MenuButton>
               <MenuList>
-                <MenuItem><NextLink href="/?url=https%3A%2F%2Fcatalog-five.vercel.app%2Ftest_aud.csv&currency=AUD" passHref><a>Simple currency conversion (e.g. AUD to USD)</a></NextLink></MenuItem>
+                <MenuItem><NextLink href="/?url=https%3A%2F%2Fcatalog-five.vercel.app%2Ftest_aud.csv&currency=USD" passHref><a>Simple currency conversion (e.g. AUD to USD)</a></NextLink></MenuItem>
                 <MenuItem><NextLink href="/?url=https%3A%2F%2Fcatalog-five.vercel.app%2Ftest.csv&country=AU&currency=AUD" passHref><a>Localized catalog with country override (US to AU)</a></NextLink></MenuItem>
                 <MenuItem><NextLink href="/?url=https%3A%2F%2Fcatalog-five.vercel.app%2Ftest.csv&inventory=999&category=Electronics" passHref><a>Make checkout-available catalog with static inventory and category override)</a></NextLink></MenuItem>
               </MenuList>
