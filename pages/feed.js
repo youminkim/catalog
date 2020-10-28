@@ -26,9 +26,13 @@ export async function getServerSideProps({ params, req, res, query }) {
 
     // change records
     const records_new = records.map((r)=>{
-        Object.keys(query).filter((k)=>!['url', 'currency'].includes(k)).map((k)=>{
+        Object.keys(query).filter((k)=>!['url', 'country', 'currency'].includes(k)).map((k)=>{
             r[k] = query[k]
         })
+
+        if (query.country) {
+            r.override = query.country
+        }
 
         if (query.currency) {
             const rate = currencyRate.rates[query.currency]            
