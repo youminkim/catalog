@@ -1,0 +1,3 @@
+id,title,description,availability,condition,price,link,image_link,brand
+A1,Apple,Fresh,in stock,new,9.99 USD,https://en.wikipedia.org/wiki/Apple,https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Honeycrisp.jpg/440px-Honeycrisp.jpg,Apple
+A2,Bread,"Sweet, but fresh",in stock,new,3.33 USD,https://en.wikipedia.org/wiki/Bread,https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Korb_mit_Br%C3%B6tchen.JPG/500px-Korb_mit_Br%C3%B6tchen.JPG,Bread
