@@ -1,65 +1,105 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { Box, Button, Divider, FormControl, FormHelperText, FormLabel, Heading, Input, Link, Stack, Text, Textarea } from '@chakra-ui/core'
+import { Field, Form, Formik } from 'formik';
+import { useState } from 'react';
 
 export default function Home() {
+  const [generatedUrl, setGeneratedUrl] = useState('')
+  const baseUrl = "https://catalog.vercel.app"
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Box>
+      <Heading mb="5">FB/IG Catalog Helper</Heading>
+      <Formik
+        initialValues={{url: '', country: '', currency: '', inventory: '', category: ''}}
+        validate={values => {
+          const errors = {};
+          return errors;
+        }}
+        onSubmit={(values, { setSubmitting }) => {
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+          function q(values) {
+            return Object.keys(values)
+              .map((c)=>{return {
+                value:values[c],
+                key: c,
+              }})
+              .filter((c)=>c.value)
+              .map((c)=>`${c.key}=${encodeURIComponent(c.value)}`)
+              .join("&")
+          }
+          console.log(q(values))
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+          setGeneratedUrl(`${baseUrl}/feed?${q(values)}`)
+          setSubmitting(false);
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <Stack spacing={3}>
+              <Field name="url">
+                {({ field, form }) => (
+                  <FormControl id="form_url" isInvalid={form.errors.name && form.touched.name} isRequired>
+                  <FormLabel>Original Feed</FormLabel>
+                  <Input {...field} id="url" placeholder="CSV file url" size="md" />
+                  </FormControl>
+                )}
+              </Field>
+              
+              <Field name="country">
+                {({ field, form }) => (
+                  <FormControl id="form_country">
+                    <FormLabel>Country Override</FormLabel>
+                    <Input {...field} id="country" placeholder="e.g. US" size="md" />
+                    <FormHelperText><Link href="https://www.facebook.com/business/help/2144286692311411?id=725943027795860">Use ISO Code</Link></FormHelperText>
+                  </FormControl>
+                )}
+              </Field>
+              
+              <Field name="currency">
+                {({ field, form }) => (
+                  <FormControl id="form_currency">
+                    <FormLabel>Currency Override</FormLabel>
+                    <Input {...field} id="currency" placeholder="e.g. USD" size="md" />
+                    <FormHelperText><Link href="https://www.currency-iso.org/en/home/tables.html">Use ISO Code</Link></FormHelperText>
+                  </FormControl>
+                )}
+              </Field>
+                
+              <Field name="inventory">
+                {({ field, form }) => (
+                  <FormControl id="form_inventory">
+                    <FormLabel>Inventory # Override</FormLabel>
+                    <Input {...field} id="inventory" placeholder="e.g. 999" size="md" />
+                  </FormControl>
+                )}
+              </Field>
+              
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+              <Field name="category">
+                {({ field, form }) => (
+                  <FormControl id="form_category">
+                    <FormLabel>Category Override</FormLabel>
+                    <Input {...field} id="category" placeholder="e.g. clothing & accessories" size="md" />
+                    <FormHelperText><Link href="https://www.facebook.com/help/526764014610932">Use Facebook or Google product category</Link></FormHelperText>
+                  </FormControl>
+                )}
+              </Field>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+              <Button type="submit" disabled={isSubmitting}>
+                Generate New Feed
+              </Button>
+            </Stack>
+          </Form>
+        )}
+      </Formik>
+      {generatedUrl ? 
+        (
+          <>
+            <Divider my="5" />
+            <Text><Link href={generatedUrl}>{generatedUrl}</Link></Text>
+          </>
+        )
+      : null}
+    </Box>
   )
 }
