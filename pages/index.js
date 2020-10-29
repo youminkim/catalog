@@ -1,9 +1,10 @@
-import { Box, Button, Divider, Flex, FormControl, FormHelperText, FormLabel, Heading, Input, Link, Menu, MenuButton, MenuItem, MenuList, Stack, Text, Textarea } from '@chakra-ui/core'
+import { Badge, Box, Button, Divider, Flex, FormControl, FormHelperText, FormLabel, Heading, Input, Link, Menu, MenuButton, MenuItem, MenuList, Stack, Text, Textarea } from '@chakra-ui/core'
 import { Field, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useRouter } from 'next/router'
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import {default as NextLink} from 'next/link'
+import { AiFillGithub } from 'react-icons/ai';
 
 
 export default function Home(props) {
@@ -17,6 +18,7 @@ export default function Home(props) {
   return (
     <Box>
       <Heading mb="5">FB/IG Catalog Helper</Heading>
+      <Text>Clone your catalog with different currencies. You can also convert your Dynamic Ads catalog to Checkout-ready catalog.</Text>
       <Flex my="5">
         <Menu>
           {({ isOpen }) => (
@@ -121,10 +123,12 @@ export default function Home(props) {
         (
           <>
             <Divider my="5" />
-            <Text><Link href={generatedUrl}>{generatedUrl}</Link></Text>
+            <Text><Badge colorScheme="green">New Feed URL</Badge> <Link href={generatedUrl}>{generatedUrl}</Link></Text>
           </>
         )
       : null}
+      <Divider my="5" />
+      <Flex my="10" mx="auto"><Button as="a" target="_blank" variant="outline" href="https://github.com/youminkim/catalog" leftIcon={<AiFillGithub />}>View source</Button></Flex>
     </Box>
   )
 }
